@@ -178,6 +178,20 @@ std::vector<vcl::vec3> create_tree_pos(int v_larg, int h_high, const gui_scene_s
     return tree_pos;
 }
 
+vcl::hierarchy_mesh_drawable create_tree_simple() {
+    float ratio = 1.5f;
+    vcl::hierarchy_mesh_drawable tree;
+    mesh_drawable tronc = mesh_drawable(mesh_primitive_cylinder(0.05f * ratio, { 0,0,0 }, { 0,0,0.4f * ratio }));
+    mesh_drawable cime = mesh_drawable(mesh_primitive_cone(0.15f * ratio, { 0,0,0 }, { 0,0,0.1f * ratio }));
+    tronc.texture_id = create_texture_gpu(image_load_png("scenes/projet/assets/ecorce.png"));
+    cime.texture_id = create_texture_gpu(image_load_png("scenes/projet/assets/feuillage.png"));
+    tree.add(tronc, "tronc");
+    tree.add(cime, "cime1", "tronc", { 0,0,0.2f * ratio });
+    tree.add(cime, "cime2", "tronc", { 0,0,0.3f * ratio });
+    tree.add(cime, "cime3", "tronc", { 0,0,0.4f * ratio });
+    return tree;
+}
+
 
 vcl::hierarchy_mesh_drawable create_tree() {
     float ratio = 1.0f;
