@@ -27,7 +27,7 @@ using namespace vcl;
 
 void scene_model::setup_data(std::map<std::string, GLuint>& shaders, scene_structure&, gui_structure&)
 {
-    // valeurs générales
+    // valeurs gÃ©nÃ©rales
     t_vol = 8;
     vol = false;
     int r_v = 4; // larg routes verticales
@@ -137,6 +137,24 @@ void scene_model::frame_draw(std::map<std::string, GLuint>& shaders, scene_struc
     // cygne 
     cygne.update_local_to_global_coordinates();
     draw_cygne(cygne, t, scene, gui_scene, cygne_pos);
+    
+    //tree
+     int cmp=0;
+    for (vec3 position : tree_pos) {
+        if (cmp%4==0){
+            tree["tronc0-0"].transform.translation = position;
+            tree.update_local_to_global_coordinates();
+            draw(tree, scene.camera);
+        }
+        else{
+            tree_simple["tronc"].transform.translation = position;
+            tree_simple.update_local_to_global_coordinates();
+            draw(tree_simple, scene.camera);
+
+        }
+        ++cmp;
+
+    }
     
 
     
